@@ -85,7 +85,7 @@ public class SerialManager : MonoBehaviour
                 yield return null; // wait for next frame
             }
 
-            nowTime - DateTime.Now;
+            nowTime = DateTime.Now;
             diff = nowTime - initialTime;
         }
         while (diff.Milliseconds < timeout);
