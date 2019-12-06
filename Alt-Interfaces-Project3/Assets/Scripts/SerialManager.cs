@@ -52,6 +52,7 @@ public class SerialManager : MonoBehaviour
         }
         catch (TimeoutException e)
         {
+            Debug.Log(e);
             return null;
         }
     }
