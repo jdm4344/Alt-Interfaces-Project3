@@ -69,8 +69,8 @@ public class Projectile : MonoBehaviour
         //Calculate deceleration based on current direciton and assigned decelRate 
         deceleration = decelRate * direction;
         //Adjust velocity components
-        velocity.x = velocity.x * 0.99f;
-        velocity.y = velocity.y * 0.99f;
+        //velocity.x = velocity.x * 0.99f;
+        //velocity.y = velocity.y * 0.99f;
         //Add velocity to position - this may be arbitrary as this is also done in Move()
         position += velocity;
     }

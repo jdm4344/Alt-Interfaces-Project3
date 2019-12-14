@@ -7,17 +7,19 @@ public class TurretControl : MonoBehaviour
     // Attributes
     [Header("Managers")]
     public ProjectileManager projectileManager;
-    public Sprite projectile;
+    public GameObject projectile;
     public Vector3 position;
     [Header("Rotation")]
     public Vector3 direction;
     public float anglePerFrame;
     public float totalRotation;
+    private TankPhysics tankPhysics;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!projectileManager) projectileManager = GameObject.Find("GameManager").GetComponent<ProjectileManager>();
+        tankPhysics = GetComponentInParent<TankPhysics>();
     }
 
     // Update is called once per frame
@@ -37,15 +39,21 @@ public class TurretControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && projectileManager.canFire == true)
         {
-            newProjectile = new GameObject("Bullet");
-            // Set position
-            newProjectile.transform.position = position;
-            // Attach sprite
-            SpriteRenderer sr = newProjectile.AddComponent<SpriteRenderer>();
-            sr.sprite = projectile;
-            // Attach Projectile behavior
-            newProjectile.AddComponent<Projectile>();
-            //Set direction of created bullet to direction cannon is facing - rotate +90 deg
+            //newProjectile = new GameObject("Bullet");
+            //// Set position
+            //newProjectile.transform.position = position;
+            //// Attach sprite
+            //SpriteRenderer sr = newProjectile.AddComponent<SpriteRenderer>();
+            ////sr.sprite = projectile;
+            //// Attach Projectile behavior
+            //newProjectile.AddComponent<Projectile>();
+            ////Set direction of created bullet to direction cannon is facing - rotate +90 deg
+            //newProjectile.GetComponent<Projectile>().direction = direction;
+
+            //Create bullet object
+            newProjectile = Instantiate(projectile, position, gameObject.transform.rotation);
+
+            //Set direction of created bullet to direction cannon is facing
             newProjectile.GetComponent<Projectile>().direction = direction;
 
             //Account for new bullet

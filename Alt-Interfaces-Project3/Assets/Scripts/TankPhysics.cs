@@ -56,14 +56,16 @@ public class TankPhysics : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             totalRotation += anglePerFrame;
-            turretScript.totalRotation += anglePerFrame;
+            //turretScript.totalRotation += anglePerFrame;
             direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
+            //turretScript.direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
         }
         else if (Input.GetKey(KeyCode.RightArrow)) //Rotate right (negative)
         {
             totalRotation -= anglePerFrame;
-            turretScript.totalRotation -= anglePerFrame;
+            //turretScript.totalRotation -= anglePerFrame;
             direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
+            //turretScript.direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
         }
 
         //Update transform component
