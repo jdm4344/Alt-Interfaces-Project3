@@ -40,23 +40,23 @@ public class SerialManager : MonoBehaviour
         //    seconds = 0;
         //}
 
-        try
-        {
-            string value = stream.ReadLine();
-            string[] substrings = value.Split(',');
-            //Arduino hopefully sending int,int,int,int,int
-            float newy = float.Parse(substrings[0]); //first of 3 values sent
-            newy = (newy - 512f) / 200;
-            Debug.Log(value);
+        //try
+        //{
+        //    string value = stream.ReadLine();
+        //    string[] substrings = value.Split(',');
+        //    //Arduino hopefully sending int,int,int,int,int
+        //    float newy = float.Parse(substrings[0]); //first of 3 values sent
+        //    newy = (newy - 512f) / 200;
+        //    Debug.Log(value);
 
-            stream.Write("A"); //tell arduino to keep going
-            transform.position = new Vector3(transform.position.x, newy, transform.position.z);
-            //this.transform.position.y = newy;
-        }
-        catch (Exception e)
-        {
-            //no op
-            Debug.Log(e);
-        }
+        //    stream.Write("A"); //tell arduino to keep going
+        //    transform.position = new Vector3(transform.position.x, newy, transform.position.z);
+        //    //this.transform.position.y = newy;
+        //}
+        //catch (Exception e)
+        //{
+        //    //no op
+        //    Debug.Log(e);
+        //}
     }
 }

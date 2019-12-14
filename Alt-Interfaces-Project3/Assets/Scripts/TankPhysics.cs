@@ -14,6 +14,7 @@ public class TankPhysics : MonoBehaviour
     [Header("Rotation")]
     public float anglePerFrame;
     public float totalRotation;
+    private TurretControl turretScript;
     [Header("Acceleration")]
     public Vector3 acceleration;
     public float accelRate;
@@ -34,6 +35,8 @@ public class TankPhysics : MonoBehaviour
         cam = Camera.main;
         height = 2f * cam.orthographicSize;
         width = height * cam.aspect;
+
+        turretScript = gameObject.GetComponentInChildren<TurretControl>();
     }
 
     // Update is called once per frame
@@ -53,11 +56,13 @@ public class TankPhysics : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             totalRotation += anglePerFrame;
+            turretScript.totalRotation += anglePerFrame;
             direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
         }
         else if (Input.GetKey(KeyCode.RightArrow)) //Rotate right (negative)
         {
             totalRotation -= anglePerFrame;
+            turretScript.totalRotation -= anglePerFrame;
             direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
         }
 
@@ -82,8 +87,8 @@ public class TankPhysics : MonoBehaviour
         else
         {
             acceleration = accelRate * direction;
-            velocity.x = velocity.x * 0.99f;
-            velocity.y = velocity.y * 0.99f;
+            velocity.x = velocity.x * 0.85f;
+            velocity.y = velocity.y * 0.85f;
             position += velocity;
         }
     }

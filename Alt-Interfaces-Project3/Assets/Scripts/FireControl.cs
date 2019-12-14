@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainCreator : MonoBehaviour
+public class FireControl : MonoBehaviour
 {
+    // Attributes
+
+
     // Start is called before the first frame update
     void Start()
     {
