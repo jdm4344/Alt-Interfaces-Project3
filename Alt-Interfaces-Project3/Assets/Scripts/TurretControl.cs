@@ -5,6 +5,10 @@ using UnityEngine;
 public class TurretControl : MonoBehaviour
 {
     // Attributes
+    [Header("Managers")]
+    public ProjectileManager projectileManager;
+    public Sprite projectile;
+    public Vector3 position;
     [Header("Rotation")]
     public Vector3 direction;
     public float anglePerFrame;
@@ -13,13 +17,40 @@ public class TurretControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!projectileManager) projectileManager = GameObject.Find("GameManager").GetComponent<ProjectileManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        position = transform.position;
+
         Rotate();
+
+        Fire();
+    }
+
+    // Fires a projectile from the turret
+    public void Fire()
+    {
+        GameObject newProjectile;
+
+        if (Input.GetKeyDown(KeyCode.Space) && projectileManager.canFire == true)
+        {
+            newProjectile = new GameObject("Bullet");
+            // Set position
+            newProjectile.transform.position = position;
+            // Attach sprite
+            SpriteRenderer sr = newProjectile.AddComponent<SpriteRenderer>();
+            sr.sprite = projectile;
+            // Attach Projectile behavior
+            newProjectile.AddComponent<Projectile>();
+            //Set direction of created bullet to direction cannon is facing - rotate +90 deg
+            newProjectile.GetComponent<Projectile>().direction = direction;
+
+            //Account for new bullet
+            projectileManager.CheckBullets();
+        }
     }
 
     //Rotates vehicle each frame depending on keyboard input
@@ -36,8 +67,7 @@ public class TurretControl : MonoBehaviour
         }
 
         //Update transform component
-        //transform.position = position;
-        //transform.rotation = Quaternion.Euler(0, 0, totalRotation);
+        transform.rotation = Quaternion.Euler(0, 0, totalRotation);
     }
 
     private void RotateLeft()

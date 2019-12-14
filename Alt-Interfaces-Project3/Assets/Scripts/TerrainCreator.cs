@@ -5,7 +5,7 @@ using UnityEngine;
 public class TerrainCreator : MonoBehaviour
 {
     // Attributes
-    public Sprite terrainTile;
+    public List<Sprite> tileList;
     private Vector3 startPosition;
     
     // Start is called before the first frame update
@@ -31,15 +31,17 @@ public class TerrainCreator : MonoBehaviour
             // Iterate vertical
             for (int j = 0; j < 10; j++)
             {
-                Vector3 position = new Vector3(startPosition.x + i, startPosition.y + j, 0);
-
+                // Pick a random tile type
+                int tileIndex = Random.Range(0, 3);
+                // Update position
+                Vector3 position = new Vector3(startPosition.x + i, startPosition.y + j, 1); // Z = 1 to place behind drone
+                // Create gameobject
                 GameObject obj = new GameObject((i + j).ToString());
-
+                // Set position
                 obj.transform.position = position;
-
+                // Attach sprite
                 SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
-
-                sr.sprite = terrainTile;
+                sr.sprite = tileList[tileIndex];
             }
         }
     }

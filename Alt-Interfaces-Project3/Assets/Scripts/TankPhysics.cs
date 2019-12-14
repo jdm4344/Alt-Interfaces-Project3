@@ -78,10 +78,10 @@ public class TankPhysics : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             acceleration = accelRate * direction;
-            Debug.Log("Accel:" + acceleration);
+            //Debug.Log("Accel:" + acceleration);
             velocity += acceleration;
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-            Debug.Log(velocity);
+            //Debug.Log(velocity);
             position += velocity;
         }
         else

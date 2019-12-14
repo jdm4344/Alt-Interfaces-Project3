@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireControl : MonoBehaviour
+public class TargetManager : MonoBehaviour
 {
-    // Attributes
-
-
     // Start is called before the first frame update
     void Start()
     {
