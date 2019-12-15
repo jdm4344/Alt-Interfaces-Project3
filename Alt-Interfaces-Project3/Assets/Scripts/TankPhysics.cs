@@ -56,14 +56,12 @@ public class TankPhysics : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             totalRotation += anglePerFrame;
-            //turretScript.totalRotation += anglePerFrame;
             direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
             //turretScript.direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
         }
         else if (Input.GetKey(KeyCode.RightArrow)) //Rotate right (negative)
         {
             totalRotation -= anglePerFrame;
-            //turretScript.totalRotation -= anglePerFrame;
             direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
             //turretScript.direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
         }
@@ -83,7 +81,16 @@ public class TankPhysics : MonoBehaviour
             //Debug.Log("Accel:" + acceleration);
             velocity += acceleration;
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-            //Debug.Log(velocity);
+            //Debug.Log("Pos " + velocity);
+            position += velocity;
+        }
+        else if(Input.GetKey(KeyCode.DownArrow))
+        {
+            acceleration = accelRate * -direction;
+            //Debug.Log("Accel:" + acceleration);
+            velocity += acceleration;
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+            //Debug.Log("neg " + velocity);
             position += velocity;
         }
         else
