@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
+    [Header("Assets")]
+    public List<Sprite> civilianSprites;
+    public List<Sprite> hostileSprites;
+
     // Start is called before the first frame update
     void Start()
     {
