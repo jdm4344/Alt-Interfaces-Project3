@@ -6,9 +6,6 @@ using UnityEngine;
  */
 public class Wanderer : Vehicle
 {
-    //Attributes
-    public GameObject seekTarget;
-
     // Use this for initialization
     public override void Start()
     {

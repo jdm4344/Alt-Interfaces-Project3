@@ -37,15 +37,8 @@ public abstract class Vehicle : MonoBehaviour
     public float wanderAngle; //angle for generating wander vector
     public float angleAdjust;
     public Vector3 wanderForce;
-    //Terrain Information
-    Terrain terrain;
     //Flocking
     public float separationWeight;
-    public float alignWeight;
-    public float cohesionWeight;
-    //Air/Fluid Resistance
-    public GameObject[] fluids;
-    public float dragWeight;
     //SceneManager
     public GameObject sceneManager;
     //Off-screen Detection
@@ -64,10 +57,7 @@ public abstract class Vehicle : MonoBehaviour
         //obstacles = sceneManager.GetComponent<SceneManager>().obstacleList;
 
         //Determine radius for collision checks
-        combinedRadii = gameObject.GetComponent<BoxCollider>().bounds.extents.x * 2;
-
-        //Get terrain data for height adjustment
-        terrain = Terrain.activeTerrain;
+        combinedRadii = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x * 2;
 
         //Get array of fluids to be interacted with
         //fluids = sceneManager.GetComponent<SceneManager>().fluidArray;
@@ -106,8 +96,6 @@ public abstract class Vehicle : MonoBehaviour
         vehiclePosition += (velocity * Time.deltaTime);
         //Grab current direction from velocity - new
         direction = velocity.normalized;
-        //Adjust position for terrain height
-        transform.position = new Vector3(vehiclePosition.x, terrain.SampleHeight(new Vector3(vehiclePosition.x, 0, vehiclePosition.z)) + 1, vehiclePosition.z);
         //Update Rotation
         Rotate();
         //Zero out acceleration - new
@@ -163,7 +151,7 @@ public abstract class Vehicle : MonoBehaviour
         //If future position is OOB, return vector towards center of world
         if (futurePos.x > 190 || futurePos.x < 10 || futurePos.z > 190 || futurePos.z < 10)
         {
-            return Seek(new Vector3(100, 0, 100));
+            return Seek(new Vector3(100, 100, 0));
         }
 
         return Vector3.zero;
@@ -186,7 +174,7 @@ public abstract class Vehicle : MonoBehaviour
         wanderAngle += (Random.Range(0, 1) * angleAdjust) - (angleAdjust * 0.5f);
         wanderForce = Seek(dirCircle + moveLoc);
         Debug.DrawLine(vehiclePosition, vehiclePosition + wanderForce, Color.white);
-        return new Vector3(wanderForce.x, 0, wanderForce.z);
+        return new Vector3(wanderForce.x, wanderForce.y, 0);
     }
 
     //Helper Method - Gets an angle to adjust the next position to wander towards
@@ -194,7 +182,7 @@ public abstract class Vehicle : MonoBehaviour
     {
         //float mag = position.magnitude;
         position.x = Mathf.Cos(angle) * 1.5f;
-        position.z = Mathf.Sin(angle) * 1.5f;
+        position.y = Mathf.Sin(angle) * 1.5f;
 
         return position;
     }
@@ -267,14 +255,14 @@ public abstract class Vehicle : MonoBehaviour
     {
         //Get difference in X and Y positions for centers of the gameobject and another object
         float xDiff = gameObject.GetComponent<BoxCollider>().bounds.center.x - obj.GetComponent<BoxCollider>().bounds.center.x;
-        float zDiff = gameObject.GetComponent<BoxCollider>().bounds.center.z - obj.GetComponent<BoxCollider>().bounds.center.z;
+        float yDiff = gameObject.GetComponent<BoxCollider>().bounds.center.y - obj.GetComponent<BoxCollider>().bounds.center.y;
 
         //Square both differences
         xDiff = xDiff * xDiff;
-        zDiff = zDiff * zDiff;
+        yDiff = yDiff * yDiff;
 
         //Combine differences and take root
-        float centerDist = xDiff + zDiff;
+        float centerDist = xDiff + yDiff;
 
         centerDist = Mathf.Sqrt(centerDist);
 
@@ -373,6 +361,7 @@ public abstract class Vehicle : MonoBehaviour
         return Seek(average - velocity);
     }
 
+    // Wraps vehicle to opposite edge of screen
     public void Wrap()
     {
         //Check X position

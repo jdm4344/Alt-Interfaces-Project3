@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7347829342053326186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7347829342053326189}
+  - component: {fileID: 7347829342053326188}
+  m_Layer: 0
+  m_Name: Civilian
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7347829342053326189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347829342053326186}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25809607, y: 3.0200703, z: -10.847656}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7347829342053326188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347829342053326186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040fe3da3fb358b48b8555edf69654ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehiclePosition: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  acceleration: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  ultimateForce: {x: 0, y: 0, z: 0}
+  mass: 40
+  maxSpeed: 6
+  maxForce: 2500
+  forward: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
+  safeDistance: 2
+  radius: 1
+  obstacles: []
+  obstaclePosition: {x: 0, y: 0, z: 0}
+  obstacleRadius: 4
+  avoidanceWeight: 100
+  wanderWeight: 6
+  companions: []
+  boundsWeight: 100
+  wanderAngle: -30
+  angleAdjust: 10
+  wanderForce: {x: 0, y: 0, z: 0}
+  separationWeight: 150
+  fluids: []
+  dragWeight: 0
+  sceneManager: {fileID: 0}
+  seekTarget: {fileID: 0}

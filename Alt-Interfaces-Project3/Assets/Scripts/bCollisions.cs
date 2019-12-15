@@ -7,6 +7,8 @@ public class bCollisions : MonoBehaviour
     //Attributes
     [Header("Managers")]
     public ProjectileManager projectileManager;
+    public TargetManager targetManager;
+
     public List<GameObject> obstacles;
     private Vector3 max;
     private Vector3 min;
@@ -18,6 +20,7 @@ public class bCollisions : MonoBehaviour
         //obstacles = GameObject.Find("SceneManager").GetComponent<AsteroidManager>().asteroidList;
 
         if (!projectileManager) projectileManager = GameObject.Find("GameManager").GetComponent<ProjectileManager>();
+        if (!targetManager) targetManager = GameObject.Find("GameManager").GetComponent<TargetManager>();
     }
 
     // Update is called once per frame
@@ -72,17 +75,17 @@ public class bCollisions : MonoBehaviour
                 return true;
             }
         }
-        else if (obs.name.Contains("dinghy"))
-        {
-            Vector3 obsMax = obs.GetComponent<SpriteRenderer>().bounds.max;
-            Vector3 obsMin = obs.GetComponent<SpriteRenderer>().bounds.min;
+        //else if (obs.name.Contains("dinghy"))
+        //{
+        //    Vector3 obsMax = obs.GetComponent<SpriteRenderer>().bounds.max;
+        //    Vector3 obsMin = obs.GetComponent<SpriteRenderer>().bounds.min;
 
-            //If intersecting return true
-            if (obsMin.x < max.x && obsMax.x > min.x && obsMax.y > min.y && obsMin.y < max.y)
-            {
-                return true;
-            }
-        }
+        //    //If intersecting return true
+        //    if (obsMin.x < max.x && obsMax.x > min.x && obsMax.y > min.y && obsMin.y < max.y)
+        //    {
+        //        return true;
+        //    }
+        //}
 
         return false;
     }
