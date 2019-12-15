@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7939774518288722886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   direction: {x: 1, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
-  speed: 0.05
+  speed: 0.08
   deceleration: {x: 0, y: 0, z: 0}
   decelRate: 1
 --- !u!114 &3919792201636581320

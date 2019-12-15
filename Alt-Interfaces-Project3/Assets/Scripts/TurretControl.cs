@@ -39,17 +39,6 @@ public class TurretControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && projectileManager.canFire == true)
         {
-            //newProjectile = new GameObject("Bullet");
-            //// Set position
-            //newProjectile.transform.position = position;
-            //// Attach sprite
-            //SpriteRenderer sr = newProjectile.AddComponent<SpriteRenderer>();
-            ////sr.sprite = projectile;
-            //// Attach Projectile behavior
-            //newProjectile.AddComponent<Projectile>();
-            ////Set direction of created bullet to direction cannon is facing - rotate +90 deg
-            //newProjectile.GetComponent<Projectile>().direction = direction;
-
             //Create bullet object
             newProjectile = Instantiate(projectile, position, gameObject.transform.rotation);
 

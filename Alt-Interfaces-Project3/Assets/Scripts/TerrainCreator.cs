@@ -25,6 +25,8 @@ public class TerrainCreator : MonoBehaviour
     // Places grid of terrain tiles
     void MakeTerrain()
     {
+        GameObject parent = GameObject.Find("Terrain");
+
         // Iterate horizontal
         for(int i = 0; i < 18; i++)
         {
@@ -36,7 +38,8 @@ public class TerrainCreator : MonoBehaviour
                 // Update position
                 Vector3 position = new Vector3(startPosition.x + i, startPosition.y + j, 1); // Z = 1 to place behind drone
                 // Create gameobject
-                GameObject obj = new GameObject((i + j).ToString());
+                GameObject obj = new GameObject("Tile");
+                obj.transform.SetParent(parent.transform);
                 // Set position
                 obj.transform.position = position;
                 // Attach sprite
