@@ -16,6 +16,10 @@ public class TurretControl : MonoBehaviour
     public float anglePerFrame;
     public float totalRotation;
     private TankPhysics tankPhysics;
+    [Header("Target Data")]
+    public GameObject currentTarget;
+    public bool targetSelected;
+    public bool targetConfirmed;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,9 @@ public class TurretControl : MonoBehaviour
         if (!projectileManager) projectileManager = GameObject.Find("GameManager").GetComponent<ProjectileManager>();
         if (!targetManager) targetManager = GameObject.Find("GameManager").GetComponent<TargetManager>();
         tankPhysics = GetComponentInParent<TankPhysics>();
+        currentTarget = null;
+        targetSelected = false;
+        targetConfirmed = false;
     }
 
     // Update is called once per frame
@@ -32,16 +39,31 @@ public class TurretControl : MonoBehaviour
 
         Rotate();
 
-        Fire();
+        if(currentTarget != null && targetConfirmed)
+        {
+            if(targetSelected)
+            {
+                TrackTarget();
+            }
+
+            if(targetConfirmed)
+            {
+                // TODO: get command from arduino
+
+                Fire();
+            }
+
+        }
     }
 
     // Fires a projectile from the turret
     public void Fire()
     {
-        GameObject newProjectile;
 
         if (Input.GetKeyDown(KeyCode.Space) && projectileManager.canFire == true)
         {
+            GameObject newProjectile;
+
             //Create bullet object
             newProjectile = Instantiate(projectile, position, gameObject.transform.rotation);
 
@@ -63,6 +85,30 @@ public class TurretControl : MonoBehaviour
         }
     }
 
+    public void PickTarget()
+    {
+        float targetVal = Random.Range(0f, 1f);
+
+        if(targetVal < 0.75f) // Target Hostile
+        {
+
+        }
+        else // Target civilian
+        {
+
+        }
+    }
+
+    public void ConfirmTarget()
+    {
+        targetConfirmed = true;
+    }
+
+    private void TrackTarget()
+    {
+        transform.LookAt(currentTarget.transform);
+    }
+
     //Rotates vehicle each frame depending on keyboard input
     private void Rotate()
     {
@@ -77,13 +123,14 @@ public class TurretControl : MonoBehaviour
         }
 
         //Update transform component
-        transform.rotation = Quaternion.Euler(0, 0, totalRotation);
+        //transform.rotation = Quaternion.Euler(0, 0, totalRotation);
     }
 
     private void RotateLeft()
     {
         totalRotation += anglePerFrame;
         direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
+        //Update transform component
         transform.rotation = Quaternion.Euler(0, 0, totalRotation);
     }
 
@@ -91,6 +138,7 @@ public class TurretControl : MonoBehaviour
     {
         totalRotation -= anglePerFrame;
         direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
+        //Update transform component
         transform.rotation = Quaternion.Euler(0, 0, totalRotation);
     }
 }

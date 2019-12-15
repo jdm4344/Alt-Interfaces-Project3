@@ -73,23 +73,6 @@ public class bCollisions : MonoBehaviour
             return true;
         }
 
-        ////Check for first or second level ship
-        //if (obs.name.Contains("eShip"))
-        //{
-            
-        //}
-        //else if (obs.name.Contains("dinghy"))
-        //{
-        //    Vector3 obsMax = obs.GetComponent<SpriteRenderer>().bounds.max;
-        //    Vector3 obsMin = obs.GetComponent<SpriteRenderer>().bounds.min;
-
-        //    //If intersecting return true
-        //    if (obsMin.x < max.x && obsMax.x > min.x && obsMax.y > min.y && obsMin.y < max.y)
-        //    {
-        //        return true;
-        //    }
-        //}
-
         return false;
     }
 }

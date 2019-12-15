@@ -10,14 +10,26 @@ using System;
 public class SerialManager : MonoBehaviour
 {
     // Attributes
-    SerialPort stream;
-
-    float timer;
-    int seconds;
+    [Header("External Scripts")]
+    public TurretControl turretScript;
+    [Header("Serial Data")]
+    private SerialPort stream;
+    public int forwardVal;
+    public int reverseVal;
+    public int rightVal;
+    public int leftVal;
+    public int targetVal;
+    public int confirmVal;
+    public int fireVal;
+    // Timer data
+    private float timer;
+    private int seconds;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (!turretScript) turretScript = GameObject.Find("Turret").GetComponent<TurretControl>();
+
         stream = new SerialPort("COM3", 9600);
         stream.ReadTimeout = 50;
         stream.Open();

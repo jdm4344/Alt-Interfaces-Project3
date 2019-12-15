@@ -254,6 +254,8 @@ MonoBehaviour:
     type: 3}
   hostilesPrefab: {fileID: 3370177011518260889, guid: 3b1255ed69359b74bb8d2ec26eb80763,
     type: 3}
+  civilians: []
+  hostiles: []
 --- !u!1 &370805915
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileManager: {fileID: 321750205}
+  targetManager: {fileID: 321750206}
   projectile: {fileID: 7939774518288722886, guid: 1c2cecde8a3bf4c429f04154cbaab129,
     type: 3}
   position: {x: 0, y: 0, z: 0}
