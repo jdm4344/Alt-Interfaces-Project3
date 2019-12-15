@@ -4,6 +4,7 @@
  */
 
 // Attributes
+int inByte = 0;         // incoming serial byte
 // Joystick
 //const int swPin = 2; // digital switch for when stick is depressed
 const int swXPin = A0;
@@ -12,9 +13,9 @@ const int swYPin = A1;
 int swXVal = 0;
 int swYVal = 0;
 // Velostat
-const int pressPin0 = A0;
-const int pressPin1 = A1;
-const int pressPin2 = A2;
+const int pressPin0 = A2;
+const int pressPin1 = A3;
+const int pressPin2 = A4;
 // Velostat Values
 int press0Value = 0; // First pressure sensor
 int press1Value = 0; // Second pressure sensor
