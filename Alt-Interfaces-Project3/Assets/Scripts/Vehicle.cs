@@ -83,22 +83,26 @@ public abstract class Vehicle : MonoBehaviour
         //This is done here rather than 
     }
 
-    //Moves the vehicle based upon acceleration
+    // Acceleration-based movement
     void UpdatePosition()
     {
-        //"New" movement formula - multiply by Time.deltaTime to move on a per-second basis rather than per-frame
-        // - now framerate independent
+        // Framerate independent movement
         velocity += (acceleration * Time.deltaTime);
-        //Scale velocity to max speed
+
+        // Scale velocity to max speed
         velocity.Normalize();
         velocity = velocity * maxSpeed;
+
         //Update Position
         vehiclePosition += (velocity * Time.deltaTime);
-        //Grab current direction from velocity - new
+
+        // Update direction
         direction = velocity.normalized;
-        //Update Rotation
-        Rotate();
-        //Zero out acceleration - new
+
+        // Update position
+        transform.position = new Vector3(vehiclePosition.x, vehiclePosition.y, -1);
+
+        // Zero out acceleration
         acceleration = Vector3.zero;
     }
 

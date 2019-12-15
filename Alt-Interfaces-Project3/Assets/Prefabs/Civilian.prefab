@@ -49,8 +49,8 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   ultimateForce: {x: 0, y: 0, z: 0}
   mass: 40
-  maxSpeed: 6
-  maxForce: 2500
+  maxSpeed: 1
+  maxForce: 200
   forward: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
   safeDistance: 2
@@ -59,14 +59,11 @@ MonoBehaviour:
   obstaclePosition: {x: 0, y: 0, z: 0}
   obstacleRadius: 4
   avoidanceWeight: 100
-  wanderWeight: 6
+  wanderWeight: 8
   companions: []
-  boundsWeight: 100
-  wanderAngle: -30
-  angleAdjust: 10
+  boundsWeight: 200
+  wanderAngle: -5
+  angleAdjust: 5
   wanderForce: {x: 0, y: 0, z: 0}
   separationWeight: 150
-  fluids: []
-  dragWeight: 0
   sceneManager: {fileID: 0}
-  seekTarget: {fileID: 0}

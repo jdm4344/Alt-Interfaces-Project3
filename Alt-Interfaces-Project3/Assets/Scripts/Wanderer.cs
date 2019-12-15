@@ -11,6 +11,10 @@ public class Wanderer : Vehicle
     {
         base.Start();
 
+        maxSpeed = Random.Range(1, 2);
+        maxForce = Random.Range(100, 500);
+        angleAdjust += Random.Range(0f, 1f);
+
         //companions = sceneManager.GetComponent<SceneManager>().flockList;
     }
 

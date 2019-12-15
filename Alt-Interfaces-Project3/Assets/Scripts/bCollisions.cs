@@ -31,23 +31,24 @@ public class bCollisions : MonoBehaviour
         {
             if (ColCheck(obstacles[i]))
             {
-                //Determine points for destroying asteroid
-                //Check for first or second level ship
-                if (obstacles[i].name.Contains("eShip"))
+                //Check for civilian or hostile
+                if (obstacles[i].name.Equals("Civilian(Clone)"))
                 {
+                    targetManager.civilians.Remove(obstacles[i]);
                     //GameObject.Find("SceneManager").GetComponent<ScoreManager>().score += 20;
                 }
-                else if (obstacles[i].name.Contains("dinghy"))
+                else if (obstacles[i].name.Equals("Hostile(Clone)"))
                 {
+                    targetManager.hostiles.Remove(obstacles[i]);
                     //GameObject.Find("SceneManager").GetComponent<ScoreManager>().score += 50;
                 }
-
-                //GameObject.Find("SceneManager").GetComponent<AsteroidManager>().MakeNew(obstacles[i]);
+                
+                // Destroy target
                 Destroy(obstacles[i]);
-                //GameObject.Find("pShip").transform.Find("hullLarge (1)").GetComponent<pCollisions>().obstacles.RemoveAt(i); //remove from player obstacles
-                obstacles.RemoveAt(i); // DO THIS LAST - Remove from this script's list
+                
+                obstacles.RemoveAt(i); // DO THIS LAST - Remove from this script's list to stop errors
 
-                //Destroy bullet, spawn second-level asteroids and destroy first-level asteroid
+                //Destroy bullet
                 Destroy(gameObject);
 
                 //Decrement bullet total
@@ -63,18 +64,20 @@ public class bCollisions : MonoBehaviour
         max = gameObject.GetComponent<SpriteRenderer>().bounds.max;
         min = gameObject.GetComponent<SpriteRenderer>().bounds.min;
 
-        //Check for first or second level ship
-        if (obs.name.Contains("eShip"))
-        {
-            Vector3 obsMax = obs.transform.Find("hullLarge (1)").GetComponent<SpriteRenderer>().bounds.max;
-            Vector3 obsMin = obs.transform.Find("hullLarge (1)").GetComponent<SpriteRenderer>().bounds.min;
+        Vector3 obsMax = obs.GetComponent<SpriteRenderer>().bounds.max;
+        Vector3 obsMin = obs.GetComponent<SpriteRenderer>().bounds.min;
 
-            //If intersecting return true
-            if (obsMin.x < max.x && obsMax.x > min.x && obsMax.y > min.y && obsMin.y < max.y)
-            {
-                return true;
-            }
+        //If intersecting return true
+        if (obsMin.x + 0.5f < max.x && obsMax.x - 0.5f > min.x && obsMax.y - 0.5f > min.y && obsMin.y + 0.5f < max.y) // adjust obs min and max for sprite bounds (make collision check more precise)
+        {
+            return true;
         }
+
+        ////Check for first or second level ship
+        //if (obs.name.Contains("eShip"))
+        //{
+            
+        //}
         //else if (obs.name.Contains("dinghy"))
         //{
         //    Vector3 obsMax = obs.GetComponent<SpriteRenderer>().bounds.max;

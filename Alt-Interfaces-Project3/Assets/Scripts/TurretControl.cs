@@ -7,9 +7,11 @@ public class TurretControl : MonoBehaviour
     // Attributes
     [Header("Managers")]
     public ProjectileManager projectileManager;
+    public TargetManager targetManager;
+    [Header("Assets")]
     public GameObject projectile;
+    [Header("Movement Data")]
     public Vector3 position;
-    [Header("Rotation")]
     public Vector3 direction;
     public float anglePerFrame;
     public float totalRotation;
@@ -19,6 +21,7 @@ public class TurretControl : MonoBehaviour
     void Start()
     {
         if (!projectileManager) projectileManager = GameObject.Find("GameManager").GetComponent<ProjectileManager>();
+        if (!targetManager) targetManager = GameObject.Find("GameManager").GetComponent<TargetManager>();
         tankPhysics = GetComponentInParent<TankPhysics>();
     }
 
@@ -44,6 +47,16 @@ public class TurretControl : MonoBehaviour
 
             //Set direction of created bullet to direction cannon is facing
             newProjectile.GetComponent<Projectile>().direction = direction;
+
+            // Add list of obstacles to check against
+            foreach(GameObject obj in targetManager.civilians)
+            {
+                newProjectile.GetComponent<bCollisions>().obstacles.Add(obj);
+            }
+            foreach (GameObject obj in targetManager.hostiles)
+            {
+                newProjectile.GetComponent<bCollisions>().obstacles.Add(obj);
+            }
 
             //Account for new bullet
             projectileManager.CheckBullets();

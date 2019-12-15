@@ -14,6 +14,9 @@ public class TargetManager : MonoBehaviour
     private Camera cam;
     private float height;
     private float width;
+    [Header("Created Objects")]
+    public List<GameObject> civilians;
+    public List<GameObject> hostiles;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +49,8 @@ public class TargetManager : MonoBehaviour
             // Add sprite
             SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
             sr.sprite = civilianSprites[Random.Range(0, civilianSprites.Count)]; // pick random sprite
+
+            civilians.Add(obj);
         }
 
         // Create hostiles
@@ -58,11 +63,13 @@ public class TargetManager : MonoBehaviour
             // Add sprite
             SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
             sr.sprite = hostileSprites[Random.Range(0, hostileSprites.Count)]; // pick random sprite
+
+            hostiles.Add(obj);
         }
     }
 
     private Vector3 PickRandomLocation()
     {
-        return new Vector3(Random.Range(-9, 7), Random.Range(-4, 4), 0);
+        return new Vector3(Random.Range(-9, 7), Random.Range(-4, 4), -1);
     }
 }
