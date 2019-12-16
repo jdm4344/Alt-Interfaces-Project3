@@ -196,6 +196,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ba6f72c49ef5b64bb2c962c3242e650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turretScript: {fileID: 1504209368}
+  tankScript: {fileID: 370805917}
+  swXVal: 0
+  swYVal: 0
+  targetVal: 0
+  confirmVal: 0
+  fireVal: 0
 --- !u!114 &321750204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,3 +639,6 @@ MonoBehaviour:
   direction: {x: 0, y: 1, z: 0}
   anglePerFrame: 2
   totalRotation: 0
+  currentTarget: {fileID: 0}
+  targetSelected: 0
+  targetConfirmed: 0

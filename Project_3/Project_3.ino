@@ -65,7 +65,7 @@ void loop() {
 
 void establishContact() {
   while (Serial.available() <= 0) {
-    Serial.println("0,0,0");   // send an initial string
+    Serial.println("0,0,0,0,0");   // send an initial string
     delay(300);
   }
 }

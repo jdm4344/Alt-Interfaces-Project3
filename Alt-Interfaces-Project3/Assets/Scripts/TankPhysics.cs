@@ -42,8 +42,9 @@ public class TankPhysics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Allow keyboard rotation
         Rotate();
-
+        // Allow keyboard movement
         Acceleration();
 
         Wrap();
@@ -71,6 +72,20 @@ public class TankPhysics : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, totalRotation);
     }
 
+    // Allows external control to rotate the tank right
+    public void RotateRight()
+    {
+        totalRotation -= anglePerFrame;
+        direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
+    }
+
+    // Allows external control to rotate the tank left
+    public void RotateLeft()
+    {
+        totalRotation += anglePerFrame;
+        direction = Quaternion.Euler(0, 0, anglePerFrame) * direction;
+    }
+
     //Handles acceleration and decelleration of vehicle
     private void Acceleration()
     {
@@ -84,7 +99,7 @@ public class TankPhysics : MonoBehaviour
             //Debug.Log("Pos " + velocity);
             position += velocity;
         }
-        else if(Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             acceleration = accelRate * -direction;
             //Debug.Log("Accel:" + acceleration);
@@ -100,6 +115,28 @@ public class TankPhysics : MonoBehaviour
             velocity.y = velocity.y * 0.85f;
             position += velocity;
         }
+    }
+
+    // Allows external control to move the tank forward
+    public void Forward()
+    {
+        acceleration = accelRate * direction;
+        //Debug.Log("Accel:" + acceleration);
+        velocity += acceleration;
+        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        //Debug.Log("Pos " + velocity);
+        position += velocity;
+    }
+
+    // Allows external control to move the tank in reverse
+    public void Reverse()
+    {
+        acceleration = accelRate * -direction;
+        //Debug.Log("Accel:" + acceleration);
+        velocity += acceleration;
+        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        //Debug.Log("neg " + velocity);
+        position += velocity;
     }
 
     //Wraps vehicle position from one edge of screen to opposite

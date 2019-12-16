@@ -37,30 +37,19 @@ public class TurretControl : MonoBehaviour
     {
         position = transform.position;
 
+        // Allow keyboard rotation
         Rotate();
 
-        if(currentTarget != null && targetConfirmed)
+        if(targetSelected && targetConfirmed)
         {
-            if(targetSelected)
-            {
-                TrackTarget();
-            }
-
-            if(targetConfirmed)
-            {
-                // TODO: get command from arduino
-
-                Fire();
-            }
-
+            TrackTarget();
         }
     }
 
     // Fires a projectile from the turret
     public void Fire()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space) && projectileManager.canFire == true)
+        if (projectileManager.canFire == true && targetConfirmed == true) //Input.GetKeyDown(KeyCode.Space) && 
         {
             GameObject newProjectile;
 
@@ -83,6 +72,10 @@ public class TurretControl : MonoBehaviour
             //Account for new bullet
             projectileManager.CheckBullets();
         }
+        else if(targetConfirmed == false)
+        {
+            // Do something to alert the player the target has to be confirmed
+        }
     }
 
     public void PickTarget()
@@ -91,12 +84,14 @@ public class TurretControl : MonoBehaviour
 
         if(targetVal < 0.75f) // Target Hostile
         {
-
+            currentTarget = targetManager.hostiles[Random.Range(0, targetManager.hostiles.Count)];
         }
         else // Target civilian
         {
-
+            currentTarget = targetManager.civilians[Random.Range(0, targetManager.civilians.Count)];
         }
+
+        targetSelected = true;
     }
 
     public void ConfirmTarget()
@@ -104,6 +99,7 @@ public class TurretControl : MonoBehaviour
         targetConfirmed = true;
     }
 
+    // Rotate the turret towards its target
     private void TrackTarget()
     {
         transform.LookAt(currentTarget.transform);
