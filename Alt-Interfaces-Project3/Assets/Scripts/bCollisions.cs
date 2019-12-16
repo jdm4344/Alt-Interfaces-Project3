@@ -35,11 +35,13 @@ public class bCollisions : MonoBehaviour
                 if (obstacles[i].name.Equals("Civilian(Clone)"))
                 {
                     targetManager.civilians.Remove(obstacles[i]);
+                    targetManager.civilianDeaths++;
                     //GameObject.Find("SceneManager").GetComponent<ScoreManager>().score += 20;
                 }
                 else if (obstacles[i].name.Equals("Hostile(Clone)"))
                 {
                     targetManager.hostiles.Remove(obstacles[i]);
+                    targetManager.hostileDeaths++;
                     //GameObject.Find("SceneManager").GetComponent<ScoreManager>().score += 50;
                 }
                 

@@ -26,6 +26,10 @@ public class TurretControl : MonoBehaviour
     public float rotationSpeed;
     private Quaternion trackRotation;
     private Vector3 trackDirection;
+    // Timer data
+    private float timer;
+    private int seconds;
+    private int variance;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +53,28 @@ public class TurretControl : MonoBehaviour
         if(targetSelected)
         {
             TrackTarget();
+        }
+
+        timer += Time.deltaTime;
+        seconds = (int)(timer % 60);
+
+        // Produce a random effect
+        if(timer > (60 + variance))
+        {
+            float rdm = Random.Range(0, 1);
+
+            if(rdm > 0.95f)
+            {
+                Automate();
+            }
+            else if(rdm > 0.54f && rdm < 0.63f)
+            {
+                Fire();
+            }
+
+            timer = 0;
+            seconds = 0;
+            variance = Random.Range(-15, 15);
         }
     }
 
@@ -123,20 +149,20 @@ public class TurretControl : MonoBehaviour
 
         direction = Quaternion.Euler(0, 0, rotationZ) * direction;
 
-        ///////////
-        Vector3 VectorResult;
-        float DotResult = DotProduct(transform.up, currentTarget.transform.position);
-        Debug.Log(DotResult);
-        if (DotResult > 0) // Right
-        {
-            VectorResult = transform.position + currentTarget.transform.position;
-            Debug.DrawRay(transform.position, VectorResult * 2, Color.red);
-        }
-        else // Left
-        {
-            VectorResult = transform.position - currentTarget.transform.position;
-            Debug.DrawRay(transform.position, VectorResult * 2, Color.blue);
-        }
+        /////////////
+        //Vector3 VectorResult;
+        //float DotResult = DotProduct(transform.up, currentTarget.transform.position);
+        //Debug.Log(DotResult);
+        //if (DotResult > 0) // Right
+        //{
+        //    VectorResult = transform.position + currentTarget.transform.position;
+        //    Debug.DrawRay(transform.position, VectorResult * 2, Color.red);
+        //}
+        //else // Left
+        //{
+        //    VectorResult = transform.position - currentTarget.transform.position;
+        //    Debug.DrawRay(transform.position, VectorResult * 2, Color.blue);
+        //}
 
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
     }
@@ -177,5 +203,14 @@ public class TurretControl : MonoBehaviour
     private float DotProduct(Vector3 a, Vector3 b)
     {
         return (a.x * b.x) + (a.y * b.y);
+    }
+
+    private void Automate()
+    {
+        PickTarget();
+
+        ConfirmTarget();
+
+        Fire();
     }
 }

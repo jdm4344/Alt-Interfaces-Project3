@@ -17,6 +17,9 @@ public class TargetManager : MonoBehaviour
     [Header("Created Objects")]
     public List<GameObject> civilians;
     public List<GameObject> hostiles;
+    [Header("Game Data")]
+    public int civilianDeaths;
+    public int hostileDeaths;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,9 @@ public class TargetManager : MonoBehaviour
         width = height * cam.aspect;
 
         CreateTargets();
+
+        civilianDeaths = 0;
+        hostileDeaths = 0;
     }
 
     // Update is called once per frame

@@ -13,6 +13,7 @@ public class SerialManager : MonoBehaviour
     [Header("External Scripts")]
     public TurretControl turretScript;
     public TankPhysics tankScript;
+    public Data dataScript;
     [Header("Serial Data")]
     private SerialPort stream;
     public string port;
@@ -29,8 +30,18 @@ public class SerialManager : MonoBehaviour
     void Start()
     {
         if (!turretScript) turretScript = GameObject.Find("Turret").GetComponent<TurretControl>();
+        if (!dataScript) dataScript = GameObject.Find("SerialData").GetComponent<Data>();
 
-        stream = new SerialPort("COM4", 9600);
+        if (dataScript.serialPort == null || dataScript.serialPort == "")
+        {
+            port = "COM3";
+        }
+        else
+        {
+            port = dataScript.serialPort;
+        }
+
+        stream = new SerialPort(port, 9600);
         stream.ReadTimeout = 50;
         stream.Open();
         // Hardcoded String expected from Arduino sketch
@@ -99,19 +110,19 @@ public class SerialManager : MonoBehaviour
         }
 
         // Velostat/Pressure Sensor 0
-        if(targetVal > 200)
+        if(targetVal > 150)
         {
             turretScript.PickTarget();
         }
 
         // Velostat/Pressure Sensor 1
-        if(confirmVal > 200)
+        if(confirmVal > 150)
         {
             turretScript.ConfirmTarget();
         }
 
         // Velostat/Pressure Sensor 2
-        if(fireVal > 200)
+        if(fireVal > 150)
         {
             turretScript.Fire();
         }
