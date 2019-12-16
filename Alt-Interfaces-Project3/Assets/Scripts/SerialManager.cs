@@ -15,6 +15,7 @@ public class SerialManager : MonoBehaviour
     public TankPhysics tankScript;
     [Header("Serial Data")]
     private SerialPort stream;
+    public string port;
     public int swXVal;
     public int swYVal;
     public int targetVal;
@@ -22,54 +23,54 @@ public class SerialManager : MonoBehaviour
     public int fireVal;
     // Timer data
     private float timer;
-    private int seconds;
+    public float seconds;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!turretScript) turretScript = GameObject.Find("Turret").GetComponent<TurretControl>();
 
-        stream = new SerialPort("COM3", 9600);
+        stream = new SerialPort("COM4", 9600);
         stream.ReadTimeout = 50;
         stream.Open();
         // Hardcoded String expected from Arduino sketch
         stream.Write("A");
 
         timer = 0;
-        seconds = 0;
+        seconds = 5;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(seconds >= 0.5f)
+        {
+            try
+            {
+                string value = stream.ReadLine();
+                //Debug.Log(value);
+                string[] substrings = value.Split(',');
+                //Arduino hopefully sending int,int,int,int,int
+                swXVal = int.Parse(substrings[0]); //first of 3 values sent
+                swYVal = int.Parse(substrings[1]);
+                targetVal = int.Parse(substrings[2]);
+                confirmVal = int.Parse(substrings[3]);
+                fireVal = int.Parse(substrings[4]);
+
+                stream.Write("A"); //tell arduino to keep going
+            }
+            catch (Exception e)
+            {
+                //no op
+                Debug.Log(e);
+            }
+
+            timer = 0;
+            seconds = 0;
+        }
+
         timer += Time.deltaTime;
-        seconds = (int)(timer % 60);
-
-        //if(seconds >= 30)
-        //{
-        //    WriteToArduino("PING");
-        //    seconds = 0;
-        //}
-
-        try
-        {
-            string value = stream.ReadLine();
-            Debug.Log(value);
-            string[] substrings = value.Split(',');
-            //Arduino hopefully sending int,int,int,int,int
-            swXVal = int.Parse(substrings[0]); //first of 3 values sent
-            swYVal = int.Parse(substrings[1]);
-            targetVal = int.Parse(substrings[2]);
-            confirmVal = int.Parse(substrings[3]);
-            fireVal = int.Parse(substrings[4]);
-
-            stream.Write("A"); //tell arduino to keep going
-        }
-        catch (Exception e)
-        {
-            //no op
-            Debug.Log(e);
-        }
+        seconds = (timer % 60);
 
         CheckInputs();
     }

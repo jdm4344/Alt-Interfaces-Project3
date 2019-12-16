@@ -10,6 +10,8 @@ public class TurretControl : MonoBehaviour
     public TargetManager targetManager;
     [Header("Assets")]
     public GameObject projectile;
+    public GameObject crosshairPrefab;
+    public GameObject confirmCrosshairPrefab;
     [Header("Movement Data")]
     public Vector3 position;
     public Vector3 direction;
@@ -20,6 +22,10 @@ public class TurretControl : MonoBehaviour
     public GameObject currentTarget;
     public bool targetSelected;
     public bool targetConfirmed;
+    private GameObject crosshair;
+    public float rotationSpeed;
+    private Quaternion trackRotation;
+    private Vector3 trackDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +44,9 @@ public class TurretControl : MonoBehaviour
         position = transform.position;
 
         // Allow keyboard rotation
-        Rotate();
+        //Rotate();
 
-        if(targetSelected && targetConfirmed)
+        if(targetSelected)
         {
             TrackTarget();
         }
@@ -76,6 +82,8 @@ public class TurretControl : MonoBehaviour
         {
             // Do something to alert the player the target has to be confirmed
         }
+
+        Destroy(crosshair);
     }
 
     public void PickTarget()
@@ -97,12 +105,40 @@ public class TurretControl : MonoBehaviour
     public void ConfirmTarget()
     {
         targetConfirmed = true;
+
+        Destroy(crosshair);
+        crosshair = Instantiate(confirmCrosshairPrefab, currentTarget.transform.position, Quaternion.identity);
     }
 
     // Rotate the turret towards its target
     private void TrackTarget()
     {
-        transform.LookAt(currentTarget.transform);
+        if(!crosshair) crosshair = Instantiate(crosshairPrefab, currentTarget.transform.position, Quaternion.identity);
+
+        crosshair.transform.position = currentTarget.transform.position;
+        
+        Vector3 difference = currentTarget.transform.position - transform.position;
+
+        float rotationZ = (Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg) - 90;
+
+        direction = Quaternion.Euler(0, 0, rotationZ) * direction;
+
+        ///////////
+        Vector3 VectorResult;
+        float DotResult = DotProduct(transform.up, currentTarget.transform.position);
+        Debug.Log(DotResult);
+        if (DotResult > 0) // Right
+        {
+            VectorResult = transform.position + currentTarget.transform.position;
+            Debug.DrawRay(transform.position, VectorResult * 2, Color.red);
+        }
+        else // Left
+        {
+            VectorResult = transform.position - currentTarget.transform.position;
+            Debug.DrawRay(transform.position, VectorResult * 2, Color.blue);
+        }
+
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
     }
 
     //Rotates vehicle each frame depending on keyboard input
@@ -136,5 +172,10 @@ public class TurretControl : MonoBehaviour
         direction = Quaternion.Euler(0, 0, -anglePerFrame) * direction;
         //Update transform component
         transform.rotation = Quaternion.Euler(0, 0, totalRotation);
+    }
+
+    private float DotProduct(Vector3 a, Vector3 b)
+    {
+        return (a.x * b.x) + (a.y * b.y);
     }
 }
